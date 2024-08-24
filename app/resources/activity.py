@@ -5,19 +5,6 @@ import json
 from pathlib import Path
 from models import ActivityModel
 
-file_path = Path('.') / 'app' / 'db_setting' / 'setting.json'
-with open(file_path, 'r') as file:
-    data = json.load(file)
-
-parser = reqparse.RequestParser()
-parser.add_argument('name')
-parser.add_argument('gender')
-parser.add_argument('mail')
-parser.add_argument('passengerCustom_1')
-parser.add_argument('passengerCustom_2')
-parser.add_argument('passengerCustom_3')
-parser.add_argument('payment')
-
 
 class Activities(Resource):
     def get(self):

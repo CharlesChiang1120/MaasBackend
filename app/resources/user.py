@@ -5,21 +5,6 @@ from pathlib import Path
 from server import db
 from models import UserModel
 
-file_path = Path('.') / 'app' / 'db_setting' / 'setting.json'
-
-with open(file_path, 'r') as file:
-    data = json.load(file)
-
-parser = reqparse.RequestParser()
-parser.add_argument('name')
-parser.add_argument('gender')
-parser.add_argument('mail')
-parser.add_argument('passengercustom_1')
-parser.add_argument('passengercustom_2')
-parser.add_argument('passengercustom_3')
-parser.add_argument('payment')
-parser.add_argument('phonenumber')
-parser.add_argument('pickuplocation')
 
 class UserGet(Resource):
     def get(self, name):

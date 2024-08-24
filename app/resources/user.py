@@ -5,7 +5,6 @@ from pathlib import Path
 from server import db
 from models import UserModel
 
-# 使用 os.path.join 確保路徑在不同操作系統上都能正確處理
 file_path = Path('.') / 'app' / 'db_setting' / 'setting.json'
 
 with open(file_path, 'r') as file:

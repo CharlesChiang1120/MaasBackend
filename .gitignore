@@ -1,3 +1,12 @@
 # Database
 
 db_setting
+
+
+# Python
+
+__pycache__
+
+# env
+
+venv

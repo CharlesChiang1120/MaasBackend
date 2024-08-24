@@ -1,0 +1,167 @@
+{
+  "swagger": "2.0",
+  "basePath": "/",
+  "paths": {
+    "/activities": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_activities",
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/user": {
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "delete_user",
+        "tags": [
+          "default"
+        ]
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "patch_user",
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/user/{name}": {
+      "parameters": [
+        {
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_user_get",
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "operationId": "get_users",
+        "tags": [
+          "default"
+        ]
+      },
+      "post": {
+        "requestBody": {
+          "description": "Create a new user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "example": "Male"
+                  },
+                  "mail": {
+                    "type": "string",
+                    "example": "john.doe@example.com"
+                  },
+                  "passengercustom_1": {
+                    "type": "string",
+                    "example": "custom value 1"
+                  },
+                  "passengercustom_2": {
+                    "type": "string",
+                    "example": "custom value 2"
+                  },
+                  "passengercustom_3": {
+                    "type": "string",
+                    "example": "custom value 3"
+                  },
+                  "payment": {
+                    "type": "string",
+                    "example": "credit card"
+                  },
+                  "phonenumber": {
+                    "type": "string",
+                    "example": "123-456-7890"
+                  },
+                  "pickuplocation": {
+                    "type": "string",
+                    "example": "123 Main St"
+                  }
+                },
+                "required": [
+                  "name",
+                  "mail"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        },
+        "operationId": "post_users",
+        "tags": [
+          "default"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "default",
+      "description": "Default namespace"
+    }
+  ],
+  "responses": {
+    "ParseError": {
+      "description": "When a mask can't be parsed"
+    },
+    "MaskError": {
+      "description": "When any error occurs on mask"
+    }
+  }
+}

@@ -1,6 +1,4 @@
 from server import db
-from sqlalchemy.dialects.mysql import JSON
-from datetime import datetime
 
 class UserModel(db.Model):
     __tablename__ = 'useraccount'
@@ -80,5 +78,32 @@ class ActivityModel(db.Model):
             'userdistance': self.userdistance,
             'availablepickuplocation': self.availablepickuplocation,
             'ticketlink': self.ticketlink
+        }
+    
+class ShareCarEventModel(db.Model):
+    __tablename__ = 'sharecarevent'
+
+    id = db.Column(db.String(36), primary_key=True)
+    carpreferences = db.Column(db.JSON, nullable=True)
+    passengers = db.Column(db.JSON, nullable=True)
+    startTime = db.Column(db.DateTime, nullable=True)
+    destination = db.Column(db.String(255), nullable=True)
+    departurelocations = db.Column(db.JSON, nullable=True)
+    maxparticipants = db.Column(db.JSON, nullable=True)
+    confirmed = db.Column(db.Boolean, nullable=True)
+
+    def __repr__(self):
+        return f"<ShareCarEvent(id={self.id}, destination={self.destination}, startTime={self.startTime})>"
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'carPreferences': self.carpreferences,
+            'passengers': self.passengers,
+            'startTime': self.startTime.strftime('%Y-%m-%d %H:%M:%S') if self.startTime else None,
+            'destination': self.destination,
+            'departureLocations': self.departurelocations,
+            'maxParticipants': self.maxparticipants,
+            'confirmed': self.confirmed
         }
 

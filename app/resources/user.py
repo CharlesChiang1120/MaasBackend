@@ -1,7 +1,5 @@
-from flask_restx import Resource, reqparse
+from flask_restx import Resource
 from flask import jsonify, request
-import json
-from pathlib import Path
 from server import db
 from models import UserModel
 

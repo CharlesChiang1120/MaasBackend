@@ -2,6 +2,7 @@ from flask import request, jsonify
 from flask_restx import Api
 from resources.user import Users, User, UserGet, UserPickupLocation
 from resources.activity import Activities
+from resources.sharecar import ShareCar
 from flask_swagger_ui import get_swaggerui_blueprint
 from server import create_app
 from werkzeug.exceptions import HTTPException
@@ -27,6 +28,7 @@ api.add_resource(User, '/user')
 api.add_resource(UserGet, '/user/<string:name>')
 api.add_resource(Activities, '/activity')
 api.add_resource(UserPickupLocation, '/userlocation')
+api.add_resource(ShareCar, '/sharecarevent')
 
 
 @app.errorhandler(Exception)

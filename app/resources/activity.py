@@ -1,8 +1,6 @@
-from flask_restx import Resource, reqparse
-from flask import jsonify
-import pymysql.cursors
-import json
-from pathlib import Path
+from flask_restx import Resource
+from flask import jsonify, request
+from server import db
 from models import ActivityModel
 
 

@@ -17,16 +17,31 @@
         ]
       }
     },
-    "/user": {
-      "patch": {
+    "/sharecarevent": {
+      "get": {
         "responses": {
           "200": {
             "description": "Success"
           }
         },
-        "summary": "Handle PATCH requests to update user information in the database",
-        "description": "This function updates user fields based on the provided JSON payload. It expects a JSON object with at least a `name` field to identify the user and optionally other fields to update.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Find the user in the database using the provided `name`.\n3. If the user is not found, return a 404 Not Found response.\n4. Update the user fields with the provided data if they are present in the request.\n5. Commit the changes to the database.\n6. If successful, return a 200 OK response with a success message.\n7. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the update operation, which includes:\n        - message (str): Description of the result (success or failure).\n\nHTTP Status Codes:\n    - 200 OK: When the user is successfully updated.\n    - 404 Not Found: When the user with the specified name is not found.\n    - 500 Internal Server Error: When an exception occurs during the update process.\n\nExceptions:\n    - Catches exceptions that occur during the update operation, rolls back the transaction, and returns an error message.",
-        "operationId": "patch_user",
+        "summary": "Retrieve all ShareCarEvent records from the database",
+        "description": "This method queries the database for all records in the `ShareCarEventModel` table. \nIt serializes the records into a JSON-serializable format and returns them in the response. \nThe serialization includes formatting of datetime fields and conversion of boolean values.\n\nReturns:\n    Response: A Flask `jsonify` response containing a list of serialized ShareCarEvent records.\n    If an error occurs during the process, a JSON response with an error message and status code 500 is returned.\n\nExample:\n    HTTP GET request to /events\n    Response:\n    [\n        {\n            \"id\": \"e6a31712-5d5e-4c7a-9b4b-1d2b5c82a1e0\",\n            \"carPreferences\": {\"type\": \"SUV\", \"color\": \"blue\"},\n            \"passengers\": [\"Alice\", \"Bob\"],\n            \"startTime\": \"2024-08-24 15:00:00\",\n            \"destination\": \"Downtown\",\n            \"departureLocations\": [\"Northside\", \"Eastside\"],\n            \"maxParticipants\": [4],\n            \"confirmed\": true\n        },\n        ...\n    ]\n\nRaises:\n    Exception: If an error occurs while fetching or serializing the data, a JSON response with the error details is returned.",
+        "operationId": "get_share_car",
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/user": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Handle POST requests to create a new user in the database",
+        "description": "This function expects a JSON payload with required fields to create a new user. It performs validation to ensure all required fields are present, then attempts to add the new user to the database.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Define the required fields that must be present in the request payload.\n3. Check if any of the required fields are missing.\n4. If there are missing fields, return a 400 Bad Request response with details about the missing fields.\n5. If all required fields are present, attempt to create a new user record.\n6. Add the new user to the database and commit the transaction.\n7. If successful, return a 201 Created response with a success message and the serialized user data.\n8. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the create operation, which includes:\n        - message (str): Description of the result (success or failure).\n        - user (dict, optional): Serialized user data if the operation is successful.\n\nHTTP Status Codes:\n    - 201 Created: When the user is successfully created.\n    - 400 Bad Request: When required fields are missing from the request.\n    - 500 Internal Server Error: When an exception occurs during the creation process.\n\nExceptions:\n    - Catches exceptions that occur during the database operation, rolls back the transaction, and returns an error message.",
+        "operationId": "post_user",
         "tags": [
           "default"
         ]
@@ -44,15 +59,15 @@
           "default"
         ]
       },
-      "post": {
+      "patch": {
         "responses": {
           "200": {
             "description": "Success"
           }
         },
-        "summary": "Handle POST requests to create a new user in the database",
-        "description": "This function expects a JSON payload with required fields to create a new user. It performs validation to ensure all required fields are present, then attempts to add the new user to the database.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Define the required fields that must be present in the request payload.\n3. Check if any of the required fields are missing.\n4. If there are missing fields, return a 400 Bad Request response with details about the missing fields.\n5. If all required fields are present, attempt to create a new user record.\n6. Add the new user to the database and commit the transaction.\n7. If successful, return a 201 Created response with a success message and the serialized user data.\n8. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the create operation, which includes:\n        - message (str): Description of the result (success or failure).\n        - user (dict, optional): Serialized user data if the operation is successful.\n\nHTTP Status Codes:\n    - 201 Created: When the user is successfully created.\n    - 400 Bad Request: When required fields are missing from the request.\n    - 500 Internal Server Error: When an exception occurs during the creation process.\n\nExceptions:\n    - Catches exceptions that occur during the database operation, rolls back the transaction, and returns an error message.",
-        "operationId": "post_user",
+        "summary": "Handle PATCH requests to update user information in the database",
+        "description": "This function updates user fields based on the provided JSON payload. It expects a JSON object with at least a `name` field to identify the user and optionally other fields to update.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Find the user in the database using the provided `name`.\n3. If the user is not found, return a 404 Not Found response.\n4. Update the user fields with the provided data if they are present in the request.\n5. Commit the changes to the database.\n6. If successful, return a 200 OK response with a success message.\n7. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the update operation, which includes:\n        - message (str): Description of the result (success or failure).\n\nHTTP Status Codes:\n    - 200 OK: When the user is successfully updated.\n    - 404 Not Found: When the user with the specified name is not found.\n    - 500 Internal Server Error: When an exception occurs during the update process.\n\nExceptions:\n    - Catches exceptions that occur during the update operation, rolls back the transaction, and returns an error message.",
+        "operationId": "patch_user",
         "tags": [
           "default"
         ]

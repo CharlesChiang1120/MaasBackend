@@ -2,13 +2,15 @@
   "swagger": "2.0",
   "basePath": "/",
   "paths": {
-    "/activities": {
+    "/activity": {
       "get": {
         "responses": {
           "200": {
             "description": "Success"
           }
         },
+        "summary": "Handle GET requests to retrieve all activities",
+        "description": "This function retrieves all activity records from the database that are not marked as deleted. It serializes each activity's data into a JSON format and returns it. If an error occurs during the process, it returns a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response containing a list of serialized activities or an error message. Specifically:\n        - If the activities are successfully retrieved, returns a JSON array with serialized activity data.\n        - If there is a failure in fetching activities, returns a 500 Internal Server Error response with a message indicating the failure.\n\nHTTP Status Codes:\n    - 200 OK: When the activities are successfully retrieved and the data is returned.\n    - 500 Internal Server Error: When an error occurs during the retrieval or serialization of activities.\n\nExceptions:\n    - Handles any exceptions that occur during the process by rolling back the database session and returning an error response.",
         "operationId": "get_activities",
         "tags": [
           "default"
@@ -16,24 +18,41 @@
       }
     },
     "/user": {
-      "delete": {
-        "responses": {
-          "200": {
-            "description": "Success"
-          }
-        },
-        "operationId": "delete_user",
-        "tags": [
-          "default"
-        ]
-      },
       "patch": {
         "responses": {
           "200": {
             "description": "Success"
           }
         },
+        "summary": "Handle PATCH requests to update user information in the database",
+        "description": "This function updates user fields based on the provided JSON payload. It expects a JSON object with at least a `name` field to identify the user and optionally other fields to update.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Find the user in the database using the provided `name`.\n3. If the user is not found, return a 404 Not Found response.\n4. Update the user fields with the provided data if they are present in the request.\n5. Commit the changes to the database.\n6. If successful, return a 200 OK response with a success message.\n7. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the update operation, which includes:\n        - message (str): Description of the result (success or failure).\n\nHTTP Status Codes:\n    - 200 OK: When the user is successfully updated.\n    - 404 Not Found: When the user with the specified name is not found.\n    - 500 Internal Server Error: When an exception occurs during the update process.\n\nExceptions:\n    - Catches exceptions that occur during the update operation, rolls back the transaction, and returns an error message.",
         "operationId": "patch_user",
+        "tags": [
+          "default"
+        ]
+      },
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Handle DELETE requests to remove a user from the database",
+        "description": "This function deletes a user identified by their name. It expects a JSON payload with the user's name.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Find the user in the database by their name.\n3. If the user is not found, return a 404 Not Found response.\n4. Attempt to delete the user from the database.\n5. Commit the changes to the database.\n6. If successful, return a 200 OK response with a success message.\n7. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the delete operation, which includes:\n        - message (str): Description of the result (success or failure).\n\nHTTP Status Codes:\n    - 200 OK: When the user is successfully deleted.\n    - 404 Not Found: When the user with the specified name is not found.\n    - 500 Internal Server Error: When an exception occurs during the delete process.\n\nExceptions:\n    - Catches exceptions that occur during the delete operation, rolls back the transaction, and returns an error message.",
+        "operationId": "delete_user",
+        "tags": [
+          "default"
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Handle POST requests to create a new user in the database",
+        "description": "This function expects a JSON payload with required fields to create a new user. It performs validation to ensure all required fields are present, then attempts to add the new user to the database.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Define the required fields that must be present in the request payload.\n3. Check if any of the required fields are missing.\n4. If there are missing fields, return a 400 Bad Request response with details about the missing fields.\n5. If all required fields are present, attempt to create a new user record.\n6. Add the new user to the database and commit the transaction.\n7. If successful, return a 201 Created response with a success message and the serialized user data.\n8. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the create operation, which includes:\n        - message (str): Description of the result (success or failure).\n        - user (dict, optional): Serialized user data if the operation is successful.\n\nHTTP Status Codes:\n    - 201 Created: When the user is successfully created.\n    - 400 Bad Request: When required fields are missing from the request.\n    - 500 Internal Server Error: When an exception occurs during the creation process.\n\nExceptions:\n    - Catches exceptions that occur during the database operation, rolls back the transaction, and returns an error message.",
+        "operationId": "post_user",
         "tags": [
           "default"
         ]
@@ -54,7 +73,24 @@
             "description": "Success"
           }
         },
+        "summary": "Handle GET requests to retrieve a user by their name",
+        "description": "This function retrieves a user record from the database based on the provided name. It performs a lookup and returns the user data if found. If the user is not found, it returns a 404 Not Found response.\n\nParameters:\n    name (str): The name of the user to retrieve.\n\nReturns:\n    JSON: A response containing the user data or an error message. Specifically:\n        - If the user is found, returns a JSON object with the user's serialized data.\n        - If the user is not found, returns a 404 Not Found response with a message indicating that the user was not found.\n\nHTTP Status Codes:\n    - 200 OK: When the user is found and the data is successfully retrieved.\n    - 404 Not Found: When no user with the specified name exists in the database.\n\nExceptions:\n    - This function does not handle specific exceptions, but any issues with database access or serialization would result in an error handled by Flask's global error handling mechanisms.",
         "operationId": "get_user_get",
+        "tags": [
+          "default"
+        ]
+      }
+    },
+    "/userlocation": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Handle PATCH requests to update a user's pickup location",
+        "description": "This function updates the 'pickuplocation' field for a user identified by their name.\nIt expects a JSON payload with the new pickup location and the user's name.\n\nSteps:\n1. Retrieve the JSON data from the request body.\n2. Check if 'pickuplocation' is present in the request data.\n3. Fetch the user from the database by their name.\n4. If the user is not found, return a 404 Not Found response.\n5. Update the user's 'pickuplocation' with the new value.\n6. Commit the changes to the database.\n7. If successful, return a 200 OK response with a success message.\n8. In case of an error, roll back the transaction and return a 500 Internal Server Error response with an error message.\n\nReturns:\n    JSON: A response indicating the result of the update operation, which includes:\n        - message (str): Description of the result (success or failure).\n\nHTTP Status Codes:\n    - 200 OK: When the pickup location is updated successfully.\n    - 400 Bad Request: When the 'pickuplocation' field is missing in the request.\n    - 404 Not Found: When the user with the specified name is not found.\n    - 500 Internal Server Error: When an exception occurs during the update process.\n\nExceptions:\n    - Catches exceptions that occur during the update operation, rolls back the transaction, and returns an error message.",
+        "operationId": "patch_user_pickup_location",
         "tags": [
           "default"
         ]
@@ -67,73 +103,9 @@
             "description": "Success"
           }
         },
+        "summary": "Handle GET requests to retrieve a list of users",
+        "description": "This function queries the database for all users who have not been marked as deleted.\nIt serializes the user data into a format suitable for JSON output and returns it.\n\nSteps:\n1. Query the database to filter out users where 'deleted' is not True.\n2. Serialize the user data into a dictionary format using a lambda function.\n3. Convert the serialized user data into a list.\n4. Return the list of users as a JSON response.\n\nReturns:\n    JSON: A list of dictionaries representing users, each containing the following fields:\n        - name (str): The name of the user.\n        - gender (str): The gender of the user.\n        - mail (str): The email address of the user.\n        - passengercustom_1 (str): Custom passenger field 1.\n        - passengercustom_2 (str): Custom passenger field 2.\n        - passengercustom_3 (str): Custom passenger field 3.\n        - payment (int): Payment status.\n        - phonenumber (str): Phone number of the user.\n        - pickuplocation (str): Pickup location of the user.\n\nHTTP Status Code:\n    - 200 OK: When the request is successful and user data is returned.\n    - 500 Internal Server Error: When an exception occurs while fetching user data.\n\nExceptions:\n    - Catches all exceptions and returns a JSON response with an error message and details.",
         "operationId": "get_users",
-        "tags": [
-          "default"
-        ]
-      },
-      "post": {
-        "requestBody": {
-          "description": "Create a new user",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "gender": {
-                    "type": "string",
-                    "example": "Male"
-                  },
-                  "mail": {
-                    "type": "string",
-                    "example": "john.doe@example.com"
-                  },
-                  "passengercustom_1": {
-                    "type": "string",
-                    "example": "custom value 1"
-                  },
-                  "passengercustom_2": {
-                    "type": "string",
-                    "example": "custom value 2"
-                  },
-                  "passengercustom_3": {
-                    "type": "string",
-                    "example": "custom value 3"
-                  },
-                  "payment": {
-                    "type": "string",
-                    "example": "credit card"
-                  },
-                  "phonenumber": {
-                    "type": "string",
-                    "example": "123-456-7890"
-                  },
-                  "pickuplocation": {
-                    "type": "string",
-                    "example": "123 Main St"
-                  }
-                },
-                "required": [
-                  "name",
-                  "mail"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "User created successfully"
-          },
-          "400": {
-            "description": "Invalid input"
-          }
-        },
-        "operationId": "post_users",
         "tags": [
           "default"
         ]

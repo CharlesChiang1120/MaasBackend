@@ -1,6 +1,5 @@
 from flask_restx import Resource, reqparse
 from flask import jsonify
-import pymysql
 import pymysql.cursors
 import json
 from pathlib import Path

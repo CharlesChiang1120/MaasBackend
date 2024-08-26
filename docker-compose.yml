@@ -9,6 +9,7 @@ services:
     environment:
       - FLASK_ENV=development
       - DATABASE_URL=mysql+pymysql://root:1234@mysql/yeabytour
+      
   mysql:
     image: mysql:8.0
     ports:

@@ -1,0 +1,18 @@
+version: '3'
+services:
+  flask:
+    build: .
+    ports:
+      - "8081:5000"  # Change host port to 8081
+    depends_on:
+      - mysql
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=mysql+pymysql://root:1234@mysql/yeabytour
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"  # Map port 3306 inside the container to port 3307 on the host
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: yeabytour

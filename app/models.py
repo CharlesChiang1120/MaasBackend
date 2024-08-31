@@ -53,14 +53,16 @@ class ActivityModel(db.Model):
     image = db.Column(db.String(500))
     tags = db.Column(db.JSON)
     userdistance = db.Column(db.String(20))
+    destinationaddress = db.Column(db.String(255))
     availablepickuplocation = db.Column(db.JSON)
     ticketlink = db.Column(db.String(1000))
 
-    def __init__(self, activityid, activityinfo, activitydate, destination, image, tags, userdistance, availablepickuplocation, ticketlink):
+    def __init__(self, activityid, activityinfo, activitydate, destination, destinationaddress, image, tags, userdistance, availablepickuplocation, ticketlink):
         self.activityid = activityid
         self.activityinfo = activityinfo
         self.activitydate = activitydate
         self.destination = destination
+        self.destinationaddress = destinationaddress
         self.image = image
         self.tags = tags
         self.userdistance = userdistance
@@ -73,6 +75,7 @@ class ActivityModel(db.Model):
             'activityinfo': self.activityinfo,
             'activitydate': self.activitydate.strftime('%Y-%m-%d %H:%M:%S') if self.activitydate else None,
             'destination': self.destination,
+            'destinationaddress': self.destinationaddress,
             'image': self.image,
             'tags': self.tags,
             'userdistance': self.userdistance,

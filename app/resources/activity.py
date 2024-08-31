@@ -35,6 +35,7 @@ class Activities(Resource):
                 'destination': activity.destination,
                 'image': activity.image,
                 'tags': activity.tags,  # Assuming this is a JSON-serializable field
+                'destinationaddress': activity.destinationaddress,
                 'userDistance': activity.userdistance,
                 'availablePickUpLocation': activity.availablepickuplocation,  # Assuming this is a JSON-serializable field
                 'ticketLink': activity.ticketlink
